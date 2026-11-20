@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="TRUSTGUARD AI helps students review suspicious job and internship messages.">
+  <title>{% block title %}TRUSTGUARD AI · Career Safety{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <nav class="navbar">
+    <a class="brand" href="/"><span class="brand-mark">✦</span><span>TRUSTGUARD<span class="brand-ai"> AI</span><small>CAREER SAFETY INTELLIGENCE</small></span></a>
+    <div class="nav-links"><a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a><a href="/dashboard" class="{% if request.path == '/dashboard' %}active{% endif %}">Dashboard</a><a href="#how-it-works" class="nav-how">How it works</a></div>
+    <a class="nav-cta" href="/#scanner">Scan a message <span>↗</span></a>
+  </nav>
+  <main class="container">{% block content %}{% endblock %}</main>
+  <footer class="footer"><div class="footer-brand">✦ TRUSTGUARD AI</div><p>Verify before you apply. Make career decisions with care.</p><span>Educational prototype · AI-assisted risk screening, not a fraud verdict.</span></footer>
+  <script src="{{ url_for('static',filename='js/main.js') }}"></script>
+</body>
+</html>

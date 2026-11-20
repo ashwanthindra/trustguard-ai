@@ -1,0 +1,1 @@
+IMPORTANT: This small dataset contains synthetic teaching examples created for a demo. It is not a verified real-world dataset and must not be used to claim production accuracy. Replace it with appropriately sourced, labelled and reviewed examples before making performance claims.

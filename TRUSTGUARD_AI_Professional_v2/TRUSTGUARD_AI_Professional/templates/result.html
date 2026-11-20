@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Risk Report · TRUSTGUARD AI{% endblock %}
+{% block content %}
+<div class="report-top"><a href="/" class="back-link">← Back to scanner</a><span class="section-kicker">03 / ANALYSIS REPORT</span></div>
+<section class="report-hero">
+  <div><div class="section-kicker">YOUR OPPORTUNITY REVIEW</div><h1>Risk assessment<br><span>at a glance.</span></h1><p>Review the indicators below and verify the employer independently before taking action.</p></div>
+  <div class="report-badge"><span>✦</span><b>TRUSTGUARD</b><small>AI ANALYSIS</small></div>
+</section>
+<section class="result-grid">
+  <div class="result-main">
+    <div class="result-card">
+      <div class="result-card-head"><div><span class="card-kicker">OVERALL RISK LEVEL</span><h2>{{ result.risk_level }} risk</h2></div><span class="risk-pill {{ result.risk_level|lower }}">{{ result.risk_level|upper }} RISK</span></div>
+      <div class="score-display"><strong>{{ result.risk_score }}</strong><span>/ 100</span><div class="score-caption">Risk indicator score</div></div>
+      <div class="risk-track"><div class="risk-fill {{ result.risk_level|lower }}" style="width:{{ result.risk_score }}%"></div></div>
+      <div class="scale-labels"><span>LOW</span><span>MEDIUM</span><span>HIGH</span></div>
+      <div class="model-note"><span>◈</span><div><b>{{ result.prediction }}</b><small>Model estimated probability for the potentially fraudulent class: {{ result.probability }}%. This is not proof or a guarantee.</small></div></div>
+    </div>
+    <div class="result-card warning-card">
+      <div class="card-kicker">EXPLAINABLE WARNING SIGNALS</div><h3>What should you look out for?</h3>
+      {% if result.indicators %}
+        {% for item in result.indicators %}
+        <div class="warning-item"><span class="warning-symbol">!</span><div><b>{{ item }}</b><p>{{ result.warning_details[loop.index0][0] }}</p><small>{{ result.warning_details[loop.index0][1] }}</small></div></div>
+        {% endfor %}
+      {% else %}
+        <div class="clear-state"><span>✓</span><div><b>No rule-based warning signals detected</b><p>This does not prove the offer is genuine. Continue with independent checks.</p></div></div>
+      {% endif %}
+    </div>
+  </div>
+  <aside class="result-side">
+    <div class="action-card"><div class="side-icon">✦</div><span class="card-kicker">RECOMMENDED NEXT STEP</span><h3>Pause. Verify. Then decide.</h3><p>{{ result.advice_en }}</p><div class="tamil-advice">{{ result.advice_ta }}</div></div>
+    <div class="checklist-card"><span class="card-kicker">SAFETY CHECKLIST</span><h3>Before you proceed</h3><ul><li>Visit the official company website yourself.</li><li>Verify the recruiter's email domain.</li><li>Never pay to secure a job.</li><li>Do not share OTPs or banking secrets.</li></ul></div>
+  </aside>
+</section>
+<section class="reviewed-text"><div class="card-kicker">MESSAGE REVIEWED</div><p>{{ message }}</p></section>
+<div class="report-actions"><a href="/" class="primary-btn">Analyse another message <span>↗</span></a><a href="/dashboard" class="outline-btn">View dashboard</a></div>
+<div class="disclaimer">Important: TRUSTGUARD AI is an educational screening prototype. Risk scores are indicative only; a low score does not certify a job or company as genuine.</div>
+{% endblock %}

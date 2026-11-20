@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · TRUSTGUARD AI{% endblock %}
+{% block content %}
+<div class="dashboard-top"><div><div class="section-kicker">YOUR ACTIVITY / OVERVIEW</div><h1>Analysis dashboard<span>.</span></h1><p>Keep track of the opportunities you've reviewed on this device.</p></div><div class="dashboard-actions"><a href="/export.csv" class="outline-btn">Export CSV ↓</a><a href="/#scanner" class="primary-btn">New analysis <span>↗</span></a></div></div>
+<div class="stats-grid">
+  <div class="stat-card"><span class="stat-label">TOTAL CHECKS</span><strong>{{ total }}</strong><small>All analysed messages</small><i class="stat-mark">◈</i></div>
+  <div class="stat-card stat-high"><span class="stat-label">HIGH RISK</span><strong>{{ high }}</strong><small>Needs careful review</small><i class="stat-mark">!</i></div>
+  <div class="stat-card stat-medium"><span class="stat-label">MEDIUM RISK</span><strong>{{ medium }}</strong><small>Verify before proceeding</small><i class="stat-mark">⌁</i></div>
+  <div class="stat-card stat-low"><span class="stat-label">LOW RISK</span><strong>{{ low }}</strong><small>No strong signals found</small><i class="stat-mark">✓</i></div>
+</div>
+{% if top_signals %}
+<section class="signals-card"><div class="section-kicker">EXPLAINABLE INSIGHTS</div><h2>Most frequent warning signals</h2><div class="signal-list">
+{% for signal, count in top_signals %}<div class="signal-row"><span>{{ signal }}</span><strong>{{ count }}</strong></div>{% endfor %}
+</div></section>
+{% endif %}
+<section class="history-card"><div class="history-head"><div><div class="section-kicker">RECENT ACTIVITY</div><h2>Analysis history</h2></div><span class="history-count">{{ rows|length }} RECORDS SHOWN</span></div>
+  {% if rows %}
+  <div class="table-wrap"><table><thead><tr><th>DATE & TIME</th><th>ASSESSMENT</th><th>RISK SCORE</th><th>LEVEL</th><th>WARNING SIGNALS</th></tr></thead><tbody>
+  {% for row in rows %}<tr><td>{{ row.created_at }}</td><td class="assessment-cell">{{ row.prediction }}</td><td><b>{{ row.risk_score }}/100</b></td><td><span class="table-risk {{ row.risk_level|lower }}">{{ row.risk_level }}</span></td><td>{{ row.indicators or "No rule signals" }}</td></tr>{% endfor %}
+  </tbody></table></div>
+  {% else %}<div class="empty-history"><span>⌕</span><h3>No analyses yet</h3><p>Your reviewed opportunities will appear here.</p><a href="/#scanner" class="primary-btn">Run your first scan <span>→</span></a></div>{% endif %}
+</section>
+<div class="disclaimer">History is stored in the local SQLite database on this computer. This prototype does not verify company registration or recruiter identity against official databases.</div>
+{% endblock %}
